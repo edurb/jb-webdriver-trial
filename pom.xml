@@ -1,0 +1,366 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>jbehave-web-webdriver</groupId>
+
+	<artifactId>jbehave-web-webdriver</artifactId>
+
+	<version>1.0</version>
+
+	<name>JBehave WebDriver Stories</name>
+
+	<description>
+
+Stories verifying behaviour of jbehave-web-trader-runner example application, using the WebDriver API of Selenium 2.
+
+</description>
+
+	<packaging>jar</packaging>
+
+	<properties>
+
+		<jbehave.webapp.name>trader-runner</jbehave.webapp.name>
+
+		<maven.compiler.source>1.7</maven.compiler.source>
+
+		<maven.compiler.target>1.7</maven.compiler.target>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+
+			<groupId>org.jbehave.web</groupId>
+
+			<artifactId>jbehave-web-selenium</artifactId>
+
+			<version>3.6-beta-2</version>
+
+			<scope>compile</scope>
+
+			<optional>true</optional>
+
+		</dependency>
+
+		<dependency>
+
+			<groupId>org.seleniumhq.selenium</groupId>
+
+			<artifactId>selenium-java</artifactId>
+
+			<version>2.48.2</version>
+
+		</dependency>
+
+		<dependency>
+
+			<groupId>org.jbehave</groupId>
+
+			<artifactId>jbehave-core</artifactId>
+
+			<version>4.0.4</version>
+
+		</dependency>
+
+		<dependency>
+
+			<groupId>org.jbehave</groupId>
+
+			<artifactId>jbehave-core</artifactId>
+
+			<version>4.0.4</version>
+
+			<classifier>resources</classifier>
+
+			<type>zip</type>
+
+			<scope>test</scope>
+
+		</dependency>
+
+		<!-- <dependency> <groupId>org.jbehave.site</groupId> <artifactId>jbehave-site-resources</artifactId> 
+			<version>3.3</version> <type>zip</type> <scope>test</scope> </dependency> -->
+
+		<dependency>
+
+			<groupId>org.freemarker</groupId>
+
+			<artifactId>freemarker</artifactId>
+
+			<version>2.3.20</version>
+
+			<optional>true</optional>
+
+		</dependency>
+
+		<!-- <dependency> <groupId>com.github.detro</groupId> <artifactId>phantomjsdriver</artifactId> 
+			<version>1.2.0</version> </dependency> <dependency> <groupId>net.thucydides.plugins.jira</groupId> 
+			<artifactId>thucydides-jira-requirements-provider</artifactId> <version>0.9.262</version> 
+			</dependency> -->
+
+
+
+	</dependencies>
+
+	<build>
+
+		<resources>
+
+			<resource>
+
+				<directory>src/main/java</directory>
+
+				<filtering>false</filtering>
+
+			</resource>
+
+		</resources>
+
+		<plugins>
+
+
+			<!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> <version>1.8</version> 
+				<executions> <execution> <id>copy</id> <phase>pre-integration-test</phase> 
+				<configuration> <target> <copy file="${project.basedir}/jbehave-core-4.0.5.jar" 
+				tofile="${user.home}/.m2/repository/org/jbehave/jbehave-core/4.0.4/jbehave-core-4.0.4.jar" 
+				/> </target> </configuration> <goals> <goal>run</goal> </goals> </execution> 
+				</executions> </plugin> -->
+
+
+
+			<plugin>
+
+				<groupId>org.jbehave</groupId>
+
+				<artifactId>jbehave-maven-plugin</artifactId>
+
+				<version>4.0.2</version>
+
+				<executions>
+
+					<execution>
+
+						<id>run-stories</id>
+
+						<phase>integration-test</phase>
+
+						<configuration>
+
+							<systemProperties>
+
+								<property>
+
+									<name>browser</name>
+
+									<value>chrome</value>
+
+								</property>
+
+								<!-- <property> <name>phantomjs.binary.path</name> <value>/usr/local/bin/phantomjs</value> 
+									</property> -->
+
+								<property>
+
+									<name>SAUCE_USERNAME</name>
+
+									<value>edur_boyinipalli</value>
+
+								</property>
+
+								<property>
+
+									<name>SAUCE_ACCESS_KEY</name>
+
+									<value>8b1d219e-1023-42df-8b8c-3a6c99013d0b</value>
+
+								</property>
+
+								<property>
+
+									<name>webdriver.ie.driver</name>
+
+									<value>\Users\WinBuild9\Desktop\IEDriverServer</value>
+
+								</property>
+
+								<property>
+
+									<name>webdriver.chrome.driver</name>
+
+									<value>./src/main/resources/chromedriver</value>
+
+								</property>
+
+
+								<property>
+
+									<name>jira.url</name>
+
+									<value>http://jira63sandbox.perkinelmer.net:8081/</value>
+
+									<name> jira.project</name>
+
+									<value>ZephyrTestAuto</value>
+
+									<name>jira.username</name>
+
+									<value>boyinieb</value>
+
+									<name>jira.password</name>
+
+									<value>yescookie001$</value>
+
+								</property>
+
+
+
+							</systemProperties>
+
+							<includes>
+
+								<include>**/*Stories.java</include>
+
+							</includes>
+
+							<storyTimeoutInSecs>3000</storyTimeoutInSecs>
+
+							<!-- <executorsClass> org.jbehave.core.embedder.executors.SameThreadExecutors 
+								</executorsClass> -->
+
+						</configuration>
+
+						<goals>
+
+							<goal>run-stories-as-embeddables</goal>
+
+							<goal>unpack-view-resources</goal>
+
+						</goals>
+
+					</execution>
+
+					<execution>
+
+						<id>unpack-view-resources</id>
+
+						<phase>process-resources</phase>
+
+						<goals>
+
+							<goal>unpack-view-resources</goal>
+
+						</goals>
+
+						<configuration>
+
+							<viewDirectory>target/jbehave/view</viewDirectory>
+
+						</configuration>
+
+					</execution>
+
+				</executions>
+
+				<dependencies>
+
+					<dependency>
+
+						<groupId>com.google.guava</groupId>
+
+						<artifactId>guava</artifactId>
+
+						<version>11.0.1</version>
+
+					</dependency>
+
+					<dependency>
+						<groupId>javax.mail</groupId>
+						<artifactId>javax.mail-api</artifactId>
+						<version>1.5.3</version>
+					</dependency>
+					<dependency>
+						<groupId>com.sun.mail</groupId>
+						<artifactId>javax.mail</artifactId>
+						<version>1.5.3</version>
+					</dependency>
+
+				</dependencies>
+
+			</plugin>
+
+
+
+			<!-- <plugin> <groupId>net.thucydides.maven.plugins</groupId> <artifactId>maven-thucydides-plugin</artifactId> 
+				<version>0.9.262</version> <executions> <execution> <id>thucydides-reports</id> 
+				<phase>post-integration-test</phase> <goals> <goal>aggregate</goal> </goals> 
+				</execution> </executions> <dependencies> <dependency> <groupId>net.thucydides.plugins.jira</groupId> 
+				<artifactId>thucydides-jira-requirements-provider</artifactId> <version>0.9.262</version> 
+				</dependency> </dependencies> </plugin> -->
+
+		</plugins>
+
+		<pluginManagement>
+
+			<plugins>
+
+				<!-- This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+
+				<plugin>
+
+					<groupId>org.eclipse.m2e</groupId>
+
+					<artifactId>lifecycle-mapping</artifactId>
+
+					<version>1.0.0</version>
+
+					<configuration>
+
+						<lifecycleMappingMetadata>
+
+							<pluginExecutions>
+
+								<pluginExecution>
+
+									<pluginExecutionFilter>
+
+										<groupId>org.jbehave</groupId>
+
+										<artifactId>jbehave-maven-plugin</artifactId>
+
+										<versionRange>[3.9.1,)</versionRange>
+
+										<goals>
+
+											<goal>unpack-view-resources</goal>
+
+										</goals>
+
+									</pluginExecutionFilter>
+
+									<action>
+
+										<ignore />
+
+									</action>
+
+								</pluginExecution>
+
+							</pluginExecutions>
+
+						</lifecycleMappingMetadata>
+
+					</configuration>
+
+				</plugin>
+
+			</plugins>
+
+		</pluginManagement>
+
+	</build>
+
+</project>
